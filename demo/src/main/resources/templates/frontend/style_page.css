@@ -1,63 +1,53 @@
 .hexagone {
-  position : relative;
-  /* Pour rendre responsive mettre width à 100% */;
-  width: 55vh;
-  visibility: hidden;
-  overflow : hidden;
-  margin : 0 auto;
-  transform: scaleX(2) translateY(10%);
-    /*   -webkit-filter: drop-shadow(5px 5px 5px rgba(246, 246, 246, 0.6));
-  filter : drop-shadow(5px 5px 5px rgba(255, 255, 255, 0.6));
- */}
-.hexagone::after {
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing : content-box;
-  content: "";
-  display: block;
-  margin-top: 28.86751%;
-  padding-bottom: 86.602%;
-  align-items: center;
+  width: 100vh; /* PLUS LARGE comme avant */
+  aspect-ratio: 1.5 / 1; /* étiré horizontalement */
+  position: relative;
+  margin: auto;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.55));
 }
-.hexagone .hexagonemain{
-  display: block;
-  position: absolute;
-  width: 100%;
-  padding-bottom: 115.47005%;
-  overflow: hidden;
-  visibility: hidden;
-  -webkit-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg);
-  -ms-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg);
-  transform: rotate3d(0, 0, 1, -60deg) skewY(30deg);
-  z-index: 1;
-  align-items: center;
-}
-.hexagone .hexagonemain:before{
-  content: "";
-  display: block;
-  position: absolute;
-  visibility: visible;
-  display: block;
+
+.hexagonemain {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background-color : #6a380f;
-  -webkit-transform : skewY(-30deg) rotate3d(0, 0, 1, 60deg);
-  -ms-transform : skewY(-30deg) rotate3d(0, 0, 1, 60deg);
-  transform : skewY(-30deg) rotate3d(0, 0, 1, 60deg);
-  align-items: center;
+  clip-path: polygon(
+    20% 5%,
+    80% 5%,
+    100% 50%,
+    80% 95%,
+    20% 95%,
+    0% 50%
+  );
+
+  background: linear-gradient(
+    145deg,
+    #8a4b1c,
+    #5c2e0f
+  );
+
+  box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,0.08),
+    inset 0 -30px 40px rgba(0,0,0,0.35);
+
+  pointer-events: none;
 }
 
+
+/* PAGE */
 body {
-    flex-direction: column;
-    background-color: rgb(93, 93, 93);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #6a6a6a, #3a3a3a);
 }
 
+/* TITRE */
 .titre {
-    text-align: center;
-    font-family: sans-serif;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 2.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #f3f3f3;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
-
