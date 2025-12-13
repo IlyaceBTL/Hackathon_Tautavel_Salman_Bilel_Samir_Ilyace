@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style_page_test.css}"/>
+    <title>Hackaton Tautavel : Ours de Deninger Interactif</title>
+</head>
+<body>
+    <h1 class="titre" th:text="${animal?.name} ?: 'Ours de Deninger'">Ours de Deninger</h1>
+    
+    <p class="description-animal" th:text="${animal?.description}">
+        Description de l'animal
+    </p>
+
+    <p class="age-info" th:if="${animal?.age}">
+        Âge estimé : <strong th:text="${animal.age}"></strong> ans
+    </p>
+
+    <!-- Zone d'affichage de la description -->
+    <div class="description-box" id="descriptionBox">
+        <h2 id="osTitle">Sélectionnez un os</h2>
+        <p id="osDescription" class="placeholder-text">
+            Cliquez sur un os ci-dessous pour afficher sa description.
+        </p>
+    </div>
+
+    <!-- Grille des os cliquables -->
+    <div class="container">
+        <div class="os-grid">
+            <div th:each="os : ${animal?.os}" 
+                 class="os-button" 
+                 th:data-nom="${os.nom}"
+                 th:data-description="${os.description}"
+                 onclick="afficherDescription(this)">
+                <span class="os-nom" th:text="${os.nom}">Nom de l'os</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function afficherDescription(element) {
+            const nom = element.getAttribute('data-nom');
+            const description = element.getAttribute('data-description');
+            
+            const titleElement = document.getElementById('osTitle');
+            const descriptionElement = document.getElementById('osDescription');
+            const box = document.getElementById('descriptionBox');
+            
+            titleElement.textContent = nom;
+            descriptionElement.textContent = description;
+            descriptionElement.classList.remove('placeholder-text');
+            
+            box.classList.remove('fade-in');
+            void box.offsetWidth;
+            box.classList.add('fade-in');
+            
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
