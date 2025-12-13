@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ours de Deninger - Audio</title>
+    <link rel="stylesheet" th:href="@{/style_page.css}"/>
+
+    <style>
+        /* Style spécifique pour les zones de clic (les os) */
+        .zone-clic {
+            position: absolute;
+            z-index: 10;
+            cursor: pointer;
+            border-radius: 50%;
+            /* Mettre background: rgba(255,0,0,0.5); pour voir les zones pendant le test */
+            background-color: transparent; 
+        }
+        
+        /* Pour s'assurer que l'image reste bien dans l'hexagone */
+        .conteneur-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-ours {
+            max-width: 80%;
+            max-height: 80%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="titre">Ours De Deninger (Audio)</h1>
+
+    <div class="hexagone">
+        <div class="hexagonemain">
+            <div class="conteneur-image">
+                <img th:src="@{/images/vitrine-ours.png}" alt="Vitrine Ours" class="image-ours">
+                
+                <div class="zone-clic" 
+                     style="top: 20%; left: 45%; width: 15%; height: 20%;"
+                     onclick="parler('Ceci est le crâne de l\'Ours de Deninger. Son front est plus plat que celui de l\'ours des cavernes.')">
+                </div>
+
+                <div class="zone-clic" 
+                     style="top: 60%; left: 30%; width: 20%; height: 10%;"
+                     onclick="parler('Voici le fémur. Il nous apprend que ces ours hibernaient dans la grotte.')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function parler(texte) {
+            // Stop si ça parle déjà
+            window.speechSynthesis.cancel();
+
+            // Création du message
+            const message = new SpeechSynthesisUtterance(texte);
+            message.lang = 'fr-FR'; 
+            message.rate = 1;
+
+            // Lecture
+            window.speechSynthesis.speak(message);
+        }
+    </script>
+
+</body>
+</html>
