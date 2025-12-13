@@ -61,3 +61,109 @@ h1.titre {
   object-position: center;
   display: block;
 }
+
+    .hexagone { position: relative; }
+    .hexagonemain { position: relative; }
+
+    .bone-zone {
+      position: absolute;
+      border: 3px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      z-index: 10;
+    }
+    .bone-zone:hover {
+      background: rgba(255, 215, 0, 0.18);
+      border-color: #FFD700;
+      box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+      transform: scale(1.04);
+    }
+    .bone-label {
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #FFD700;
+      color: #1a1a1a;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .bone-zone:hover .bone-label {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1200;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%);
+      padding: 1.6rem;
+      border-radius: 14px;
+      max-width: 640px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .close-btn {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      background: #fff;
+      color: #333;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-title { font-size: 1.4rem; margin-bottom: .6rem; }
+    .modal-description { font-size: 1rem; line-height: 1.4; }
+
+    /* Bouton audio dans le modal */
+    .audio-btn {
+      background: #fff;
+      color: #ff6b35;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: all 0.2s ease;
+    }
+    .audio-btn:hover {
+      background: #FFD700;
+      color: #1a1a1a;
+    }
+    .audio-btn.speaking {
+      background: #FFD700;
+      color: #1a1a1a;
+    }
+
+    @media (max-width:768px){
+      .modal-content { padding: 1rem; }
+      .bone-label { font-size: 12px; }
+    }
