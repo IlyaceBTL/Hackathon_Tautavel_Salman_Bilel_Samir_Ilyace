@@ -3,21 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ours de Deninger - Audio Test</title>
+    <title>Ours de Deninger - Interactif</title>
     <link rel="stylesheet" th:href="@{/style_page.css}"/>
-
+    
     <style>
-        .zone-clic {
-            position: absolute;
-            z-index: 10;
-            cursor: pointer;
-            border-radius: 50%;
-            background-color: rgba(255, 0, 0, 0.5); 
-            
-            pointer-events: auto;  /* <--- AJOUTE CETTE LIGNE ! */
-        }
-        
-        .conteneur-image {
+        .conteneur-interactif {
             position: relative;
             width: 100%;
             height: 100%;
@@ -25,69 +15,119 @@
             justify-content: center;
             align-items: center;
         }
+
+        /* La boîte de texte "Juste en haut" */
+        #boite-description {
+            position: absolute;
+            top: 10%; /* Positionné en haut */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #f0a500; /* Jaune doré */
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #f0a500;
+            text-align: center;
+            z-index: 20;
+            opacity: 0; /* Caché au début */
+            transition: opacity 0.3s;
+            pointer-events: none; /* Laisse passer les clics si transparent */
+        }
+        
+        #boite-description.visible {
+            opacity: 1;
+        }
+
+        /* Les zones cliquables (Ronds rouges) */
+        .zone-clic {
+            position: absolute;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.3); /* Rouge transparent */
+            z-index: 10;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .zone-clic:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 0, 0, 0.6);
+        }
         
         .image-ours {
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 90%;
+            max-height: 90%;
+            user-select: none;
         }
     </style>
 </head>
 <body>
 
-    <h1 class="titre">Ours De Deninger (Audio)</h1>
+    <h1 class="titre">Ours De Deninger</h1>
 
     <div class="hexagone">
         <div class="hexagonemain">
-            <div class="conteneur-image">
+            <div class="conteneur-interactif">
+                
                 <img th:src="@{/vitrine-ours.png}" alt="Vitrine Ours" class="image-ours">
                 
-                <div class="zone-clic" 
-                     style="top: 20%; left: 45%; width: 15%; height: 20%;"
-                     onclick="parler('Ceci est le crâne de l\'Ours de Deninger.')">
+                <div id="boite-description">
+                    <h2 id="titre-os" style="margin-bottom: 10px; text-transform: uppercase;"></h2>
+                    <p id="texte-os" style="font-size: 1.2em; color: white;"></p>
                 </div>
 
-                <div class="zone-clic" 
-                     style="top: 60%; left: 30%; width: 20%; height: 10%;"
-                     onclick="parler('Voici le fémur. Il est très robuste.')">
+                <div th:each="os : ${animal.os}" 
+                     class="zone-clic"
+                     th:classappend="'zone-' + ${#strings.replace(os.nom, ' ', '-')}"
+                     
+                
+                     th:data-nom="${os.nom}"
+                     th:data-desc="${os.description}"
+                     
+                    
+                     onclick="activerOs(this)">
                 </div>
+
             </div>
         </div>
     </div>
 
     <script>
+        function activerOs(element) {
+            // 1. Récupérer les données stockées dans la zone cliquée
+            const nom = element.getAttribute('data-nom');
+            const description = element.getAttribute('data-desc');
+
+            // 2. Afficher le texte (Visuel)
+            const boite = document.getElementById('boite-description');
+            document.getElementById('titre-os').innerText = nom;
+            document.getElementById('texte-os').innerText = description;
+            
+            // Rendre la boîte visible
+            boite.classList.add('visible');
+
+            // 3. Lire le texte (Audio)
+            parler(description);
+        }
+
         function parler(texte) {
-            console.log("--- NOUVEAU CLIC ---");
-            
-            // 1. Annuler l'audio précédent
-            window.speechSynthesis.cancel();
-
-            // 2. Récupérer les voix
-            const voix = window.speechSynthesis.getVoices();
-            
-            // MOUCHARD : Dis-moi ce que tu vois !
-            console.log("J'ai trouvé " + voix.length + " voix.");
-            if (voix.length > 0) {
-                // On affiche les 5 premières pour vérifier
-                console.log("Exemples : " + voix[0].name + ", " + voix[1].name + "...");
-            }
-
-            // 3. Chercher Audrey
-            const voixChoisie = voix.find(v => v.name.includes("Audrey")) || voix.find(v => v.name.includes("Google"));
+            window.speechSynthesis.cancel(); // Arrêter l'ancien son
 
             const message = new SpeechSynthesisUtterance(texte);
+            const voix = window.speechSynthesis.getVoices();
+            
+            // Chercher Audrey ou Google
+            const voixChoisie = voix.find(v => v.name.includes("Audrey")) || 
+                                voix.find(v => v.name.includes("Google"));
 
-            if (voixChoisie) {
-                message.voice = voixChoisie;
-                console.log("✅ SUCCÈS : J'utilise la voix -> " + voixChoisie.name);
-            } else {
-                console.log("⚠️ ÉCHEC : Je ne trouve pas Audrey. J'utilise la voix par défaut.");
-                // Affiche toutes les voix pour qu'on puisse chercher le bon nom manuellement si besoin
-                console.log(voix.map(v => v.name)); 
-            }
-
-            message.rate = 1; 
+            if (voixChoisie) message.voice = voixChoisie;
+            
+            message.rate = 1;
             window.speechSynthesis.speak(message);
         }
+        
+        // Sécurité pour charger les voix
+        window.speechSynthesis.onvoiceschanged = function() { console.log("Voix chargées"); };
     </script>
 
 </body>
