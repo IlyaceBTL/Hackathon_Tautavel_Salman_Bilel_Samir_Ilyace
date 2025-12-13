@@ -10,7 +10,7 @@ import com.interarc.demo.services.AnimalService;
 
 @Controller
 public class HomeControlleurtest {
-    
+
     private final AnimalService animalService;
 
     @Autowired
