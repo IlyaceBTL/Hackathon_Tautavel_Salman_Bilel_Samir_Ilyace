@@ -7,9 +7,7 @@
 body {
   min-height: 100vh;
   background: radial-gradient(circle at top, #3a3a3a 0%, #141414 55%, #050505 100%);
-  display: flex;
-  align-items: center;          /* centre verticalement */
-  justify-content: center;      /* centre horizontalement */
+  display: block;
   font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -18,8 +16,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4vh;                     /* espace propre entre titre et hexagone */
-}
+  margin-top: 6vh;
+    }
 
 /* titre parfaitement centré */
 h1.titre {
@@ -29,6 +27,7 @@ h1.titre {
   text-transform: uppercase;
   color: #e5e5e5;
   text-align: center;
+  margin-bottom: 0vh;
 }
 
 /* hexagone à ~80 % de l’écran (en fonction du plus petit côté) */
@@ -62,35 +61,3 @@ h1.titre {
   object-position: center;
   display: block;
 }
-/* --- POSITIONS DES OS --- */
-/* Ajuste les % (top/left) pour placer les ronds parfaitement sur l'image */
-
-.zone-crâne {
-    top: 25%;
-    left: 45%;
-    width: 15%;
-    height: 20%;
-}
-
-.zone-mandibule {
-    top: 45%;
-    left: 48%;
-    width: 10%;
-    height: 8%;
-}
-
-.zone-fémur { /* Attention aux accents dans le nom JSON ! */
-    top: 60%;
-    left: 30%;
-    width: 25%;
-    height: 10%;
-}
-
-.zone-humérus {
-    top: 35%;
-    left: 65%;
-    width: 20%;
-    height: 10%;
-}
-
-/* Astuce : Si un os n'a pas de position définie, il sera en haut à gauche par défaut. */
