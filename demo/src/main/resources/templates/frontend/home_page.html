@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +7,6 @@
   <title>Hackaton Tautavel : Equipe 3 Projet Ours du Denninger</title>
 
   <style>
-    /* Ajout styles pour zones/clique/hover + modal (copié et adapté du test) */
     .hexagone { position: relative; }
     .hexagonemain { position: relative; }
 
@@ -47,7 +46,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -95,76 +93,13 @@
 </head>
 <body>
   <div class="layout">
-    <h1 class="titre">Ours de Deninger</h1>
+    <h1 class="titre" th:text="${animal?.name} ?: 'Ours de Deninger'">Ours de Deninger</h1>
 
     <div class="hexagone">
       <div class="hexagonemain">
         <img th:src="@{/vitrine-ours.png}" alt="Ours de Denninger" class="hex-img" />
 
-        <!-- Zones cliquables (positions remontées d'environ 6%) -->
-        <div class="bone-zone" data-bone="crane" style="left:48%; top:24%; width:12%; height:15%;">
-          <div class="bone-label">Crâne</div>
-        </div>
-
-        <div class="bone-zone" data-bone="mandibule" style="left:48%; top:37%; width:8%; height:8%;">
-          <div class="bone-label">Mandibule</div>
-        </div>
-
-        <div class="bone-zone" data-bone="vertebres" style="left:32%; top:16%; width:18%; height:12%;">
-          <div class="bone-label">Vertèbres thoraciques</div>
-        </div>
-
-        <div class="bone-zone" data-bone="cotes" style="left:28%; top:26%; width:22%; height:18%;">
-          <div class="bone-label">Côtes</div>
-        </div>
-
-        <div class="bone-zone" data-bone="atlas" style="left:38%; top:14%; width:5%; height:6%;">
-          <div class="bone-label">Atlas</div>
-        </div>
-
-        <div class="bone-zone" data-bone="axis" style="left:36%; top:17%; width:5%; height:6%;">
-          <div class="bone-label">Axis</div>
-        </div>
-
-        <div class="bone-zone" data-bone="hyoide" style="left:45%; top:34%; width:4%; height:5%;">
-          <div class="bone-label">Os hyoïde</div>
-        </div>
-
-        <div class="bone-zone" data-bone="humerus-g" style="left:22%; top:36%; width:9%; height:20%;">
-          <div class="bone-label">Humérus gauche</div>
-        </div>
-
-        <div class="bone-zone" data-bone="humerus-d" style="left:68%; top:36%; width:9%; height:20%;">
-          <div class="bone-label">Humérus droit</div>
-        </div>
-
-        <div class="bone-zone" data-bone="radius-g" style="left:18%; top:52%; width:6%; height:12%;">
-          <div class="bone-label">Radius gauche</div>
-        </div>
-
-        <div class="bone-zone" data-bone="radius-d" style="left:72%; top:52%; width:6%; height:12%;">
-          <div class="bone-label">Radius droit</div>
-        </div>
-
-        <div class="bone-zone" data-bone="cubitus-g" style="left:21%; top:52%; width:5%; height:12%;">
-          <div class="bone-label">Cubitus gauche</div>
-        </div>
-
-        <div class="bone-zone" data-bone="cubitus-d" style="left:69%; top:52%; width:5%; height:12%;">
-          <div class="bone-label">Cubitus droit</div>
-        </div>
-
-        <div class="bone-zone" data-bone="patte-g" style="left:16%; top:62%; width:8%; height:12%;">
-          <div class="bone-label">Métacarpiens & Phalanges</div>
-        </div>
-
-        <div class="bone-zone" data-bone="patte-d" style="left:74%; top:62%; width:8%; height:12%;">
-          <div class="bone-label">Métacarpiens & Phalanges</div>
-        </div>
-
-        <div class="bone-zone" data-bone="penien" style="left:42%; top:46%; width:6%; height:8%;">
-          <div class="bone-label">Os pénien</div>
-        </div>
+        <!-- Zones générées dynamiquement depuis le JSON -->
 
       </div>
     </div>
@@ -179,63 +114,100 @@
     </div>
   </div>
 
-  <script>
-    // données (identique au test)
-    const bonesData = {
-      crane: { nom: "Crâne", description: "Le crâne de l'ours de Deninger présente un front bombé caractéristique. Cette structure massive protégeait le cerveau et supportait de puissantes mâchoires." },
-      mandibule: { nom: "Mandibule", description: "La mâchoire inférieure était adaptée à un régime principalement végétarien. Les dents montrent une morphologie adaptée au broyage de végétaux." },
-      vertebres: { nom: "Vertèbres thoraciques", description: "Les vertèbres thoraciques formaient une colonne vertébrale robuste, soutenant le corps massif de l'animal et permettant une grande puissance." },
-      cotes: { nom: "Côtes", description: "La cage thoracique massive protégeait les organes vitaux de cet animal trapu. Les côtes étaient particulièrement développées." },
-      atlas: { nom: "Atlas", description: "Première vertèbre cervicale qui supporte le crâne et permet les mouvements de hochement de la tête." },
-      axis: { nom: "Axis", description: "Deuxième vertèbre cervicale qui permet la rotation de la tête. Vertèbre pivot essentielle." },
-      hyoide: { nom: "Os hyoïde", description: "Petit os situé dans le cou, support de la langue et des muscles de la déglutition." },
-      "humerus-g": { nom: "Humérus gauche", description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes." },
-      "humerus-d": { nom: "Humérus droit", description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes." },
-      "radius-g": { nom: "Radius gauche", description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte." },
-      "radius-d": { nom: "Radius droit", description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte." },
-      "cubitus-g": { nom: "Cubitus gauche", description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude." },
-      "cubitus-d": { nom: "Cubitus droit", description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude." },
-      "patte-g": { nom: "Métacarpiens & Phalanges gauche", description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes." },
-      "patte-d": { nom: "Métacarpiens & Phalanges droit", description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes." },
-      penien: { nom: "Os pénien", description: "Os présent dans le pénis de nombreux mammifères carnivores et ursidés, appelé aussi baculum." }
+  <script th:inline="javascript">
+    // ============================================
+    // CONFIGURATION DES POSITIONS PAR OS
+    // Modifiez x, y, w, h pour chaque os
+    // ============================================
+    const positionsConfig = {
+      "crâne":                  { x: 40, y: 40, w: 16, h: 25 },
+      "mandibule":              { x: 48, y: 65, w: 10, h: 8 },
+      "atlas":                  { x: 38, y: 14, w: 5,  h: 6 },
+      "axis":                   { x: 36, y: 17, w: 5,  h: 6 },
+      "vertèbres thoraciques":  { x: 32, y: 16, w: 18, h: 12 },
+      "côtes":                  { x: 28, y: 26, w: 22, h: 18 },
+      "os hyoïde":              { x: 45, y: 34, w: 4,  h: 5 },
+      "humérus":                { x: 22, y: 36, w: 9,  h: 20 },
+      "radius":                 { x: 18, y: 52, w: 6,  h: 12 },
+      "cubitus":                { x: 21, y: 52, w: 5,  h: 12 },
+      "métacarpiens":           { x: 16, y: 62, w: 8,  h: 12 },
+      "phalanges":              { x: 74, y: 62, w: 8,  h: 12 },
+      "os pénien":              { x: 42, y: 46, w: 6,  h: 8 }
     };
 
-    const boneZones = document.querySelectorAll('.bone-zone');
+    // Position par défaut si l'os n'est pas dans la config
+    const defaultPosition = { x: 50, y: 50, w: 8, h: 8 };
+
+    // Récupérer les os depuis Thymeleaf (JSON)
+    const osList = /*[[${animal?.os}]]*/ [];
+
+    // Génération automatique des zones
+    const container = document.querySelector('.hexagonemain');
+    
+    if (osList && osList.length > 0) {
+      osList.forEach((os, index) => {
+        const nom = os.nom.toLowerCase();
+        const position = positionsConfig[nom] || defaultPosition;
+        
+        // Si position par défaut, décaler pour éviter superposition
+        if (!positionsConfig[nom]) {
+          position.x = 10 + (index * 7) % 80;
+          position.y = 10 + Math.floor(index / 10) * 15;
+        }
+        
+        const zone = document.createElement('div');
+        zone.className = 'bone-zone';
+        zone.setAttribute('data-nom', os.nom);
+        zone.setAttribute('data-description', os.description);
+        zone.style.left = position.x + '%';
+        zone.style.top = position.y + '%';
+        zone.style.width = position.w + '%';
+        zone.style.height = position.h + '%';
+        
+        const label = document.createElement('div');
+        label.className = 'bone-label';
+        label.textContent = os.nom;
+        
+        zone.appendChild(label);
+        container.appendChild(zone);
+      });
+    }
+
+    // Gestion du modal
     const modal = document.getElementById('boneModal');
     const closeBtn = document.getElementById('closeModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
 
-    boneZones.forEach(zone => {
+    document.querySelectorAll('.bone-zone').forEach(zone => {
       zone.addEventListener('click', function(e) {
         e.stopPropagation();
-        const boneId = this.getAttribute('data-bone');
-        const boneInfo = bonesData[boneId];
-        if (boneInfo) {
-          modalTitle.textContent = boneInfo.nom;
-          modalDescription.textContent = boneInfo.description;
-          modal.classList.add('active');
-          modal.setAttribute('aria-hidden','false');
-        }
+        const nom = this.getAttribute('data-nom');
+        const description = this.getAttribute('data-description');
+        
+        modalTitle.textContent = nom;
+        modalDescription.textContent = description;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
       });
     });
 
     closeBtn.addEventListener('click', () => {
       modal.classList.remove('active');
-      modal.setAttribute('aria-hidden','true');
+      modal.setAttribute('aria-hidden', 'true');
     });
 
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.remove('active');
-        modal.setAttribute('aria-hidden','true');
+        modal.setAttribute('aria-hidden', 'true');
       }
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         modal.classList.remove('active');
-        modal.setAttribute('aria-hidden','true');
+        modal.setAttribute('aria-hidden', 'true');
       }
     });
   </script>
