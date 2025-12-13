@@ -1,0 +1,20 @@
+{
+  "nom": "Ours de Deninger",
+  "description": "L'ours de Deninger (Ursus deningeri) était un animal trapu et massif présentant un arrière-train surbaissé et un front bombé. Espèce essentiellement ubiquiste, il était adapté à un large éventail de biotopes, allant des forêts tempérées à des milieux plus ou moins steppiques. Dérivant de l'ours étrusque (Ursus etruscus) qui vécut au Pléistocène inférieur et qui était plus carnivore que l'ours actuel, l'ours de Deninger est caractéristique de la fin du Pléistocène inférieur et de la première partie du Pléistocène moyen. Il sera remplacé dans la seconde partie du Pléistocène moyen, à partir de 400 000 ans, par l'ours des cavernes (Ursus spelaeus), de plus grande taille et plus nettement plantigrade. L'ours des cavernes disparaîtra à son tour à la fin du Pléistocène. Cette lignée, uniquement fossile, comprend les plus grands de tous les ours, qui étaient essentiellement végétariens comme le révèle la morphologie des dents. À la Caune de l'Arago, bien que peu abondant, il est présent dans tous les niveaux. Sur le sol J, daté de 500 000 ans, le crâne et tout l'arrière-train d'un vieux mâle, mort dans sa bauge pendant son hibernation, ont été mis au jour.",
+  "age": 500000,
+  "os": [
+    "crâne",
+    "mandibule",
+    "atlas",
+    "axis",
+    "vertèbres thoraciques",
+    "côtes",
+    "os hyoïde",
+    "humérus",
+    "radius",
+    "cubitus",
+    "métacarpiens",
+    "phalanges",
+    "os pénien"
+  ]
+}
