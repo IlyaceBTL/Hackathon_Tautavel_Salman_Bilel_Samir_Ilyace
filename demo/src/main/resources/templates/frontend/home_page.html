@@ -1,10 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/style_page.css}"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" th:href="@{/style_page.css}" />
   <title>Hackaton Tautavel : Equipe 3 Projet Ours du Denninger</title>
+
+  <style>
+    /* Ajout styles pour zones/clique/hover + modal (copié et adapté du test) */
+    .hexagone { position: relative; }
+    .hexagonemain { position: relative; }
+
+    .bone-zone {
+      position: absolute;
+      border: 3px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      z-index: 10;
+    }
+    .bone-zone:hover {
+      background: rgba(255, 215, 0, 0.18);
+      border-color: #FFD700;
+      box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+      transform: scale(1.04);
+    }
+    .bone-label {
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #FFD700;
+      color: #1a1a1a;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .bone-zone:hover .bone-label {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1200;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%);
+      padding: 1.6rem;
+      border-radius: 14px;
+      max-width: 640px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .close-btn {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      background: #fff;
+      color: #333;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-title { font-size: 1.4rem; margin-bottom: .6rem; }
+    .modal-description { font-size: 1rem; line-height: 1.4; }
+    @media (max-width:768px){
+      .modal-content { padding: 1rem; }
+      .bone-label { font-size: 12px; }
+    }
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -13,9 +100,144 @@
     <div class="hexagone">
       <div class="hexagonemain">
         <img th:src="@{/vitrine-ours.png}" alt="Ours de Denninger" class="hex-img" />
+
+        <!-- Zones cliquables (positions remontées d'environ 6%) -->
+        <div class="bone-zone" data-bone="crane" style="left:48%; top:24%; width:12%; height:15%;">
+          <div class="bone-label">Crâne</div>
+        </div>
+
+        <div class="bone-zone" data-bone="mandibule" style="left:48%; top:37%; width:8%; height:8%;">
+          <div class="bone-label">Mandibule</div>
+        </div>
+
+        <div class="bone-zone" data-bone="vertebres" style="left:32%; top:16%; width:18%; height:12%;">
+          <div class="bone-label">Vertèbres thoraciques</div>
+        </div>
+
+        <div class="bone-zone" data-bone="cotes" style="left:28%; top:26%; width:22%; height:18%;">
+          <div class="bone-label">Côtes</div>
+        </div>
+
+        <div class="bone-zone" data-bone="atlas" style="left:38%; top:14%; width:5%; height:6%;">
+          <div class="bone-label">Atlas</div>
+        </div>
+
+        <div class="bone-zone" data-bone="axis" style="left:36%; top:17%; width:5%; height:6%;">
+          <div class="bone-label">Axis</div>
+        </div>
+
+        <div class="bone-zone" data-bone="hyoide" style="left:45%; top:34%; width:4%; height:5%;">
+          <div class="bone-label">Os hyoïde</div>
+        </div>
+
+        <div class="bone-zone" data-bone="humerus-g" style="left:22%; top:36%; width:9%; height:20%;">
+          <div class="bone-label">Humérus gauche</div>
+        </div>
+
+        <div class="bone-zone" data-bone="humerus-d" style="left:68%; top:36%; width:9%; height:20%;">
+          <div class="bone-label">Humérus droit</div>
+        </div>
+
+        <div class="bone-zone" data-bone="radius-g" style="left:18%; top:52%; width:6%; height:12%;">
+          <div class="bone-label">Radius gauche</div>
+        </div>
+
+        <div class="bone-zone" data-bone="radius-d" style="left:72%; top:52%; width:6%; height:12%;">
+          <div class="bone-label">Radius droit</div>
+        </div>
+
+        <div class="bone-zone" data-bone="cubitus-g" style="left:21%; top:52%; width:5%; height:12%;">
+          <div class="bone-label">Cubitus gauche</div>
+        </div>
+
+        <div class="bone-zone" data-bone="cubitus-d" style="left:69%; top:52%; width:5%; height:12%;">
+          <div class="bone-label">Cubitus droit</div>
+        </div>
+
+        <div class="bone-zone" data-bone="patte-g" style="left:16%; top:62%; width:8%; height:12%;">
+          <div class="bone-label">Métacarpiens & Phalanges</div>
+        </div>
+
+        <div class="bone-zone" data-bone="patte-d" style="left:74%; top:62%; width:8%; height:12%;">
+          <div class="bone-label">Métacarpiens & Phalanges</div>
+        </div>
+
+        <div class="bone-zone" data-bone="penien" style="left:42%; top:46%; width:6%; height:8%;">
+          <div class="bone-label">Os pénien</div>
+        </div>
+
       </div>
     </div>
-
   </div>
+
+  <!-- Modal d'information -->
+  <div class="modal" id="boneModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="close-btn" id="closeModal" aria-label="Fermer">✕</button>
+      <h2 class="modal-title" id="modalTitle">Os sélectionné</h2>
+      <p class="modal-description" id="modalDescription">Description de l'os...</p>
+    </div>
+  </div>
+
+  <script>
+    // données (identique au test)
+    const bonesData = {
+      crane: { nom: "Crâne", description: "Le crâne de l'ours de Deninger présente un front bombé caractéristique. Cette structure massive protégeait le cerveau et supportait de puissantes mâchoires." },
+      mandibule: { nom: "Mandibule", description: "La mâchoire inférieure était adaptée à un régime principalement végétarien. Les dents montrent une morphologie adaptée au broyage de végétaux." },
+      vertebres: { nom: "Vertèbres thoraciques", description: "Les vertèbres thoraciques formaient une colonne vertébrale robuste, soutenant le corps massif de l'animal et permettant une grande puissance." },
+      cotes: { nom: "Côtes", description: "La cage thoracique massive protégeait les organes vitaux de cet animal trapu. Les côtes étaient particulièrement développées." },
+      atlas: { nom: "Atlas", description: "Première vertèbre cervicale qui supporte le crâne et permet les mouvements de hochement de la tête." },
+      axis: { nom: "Axis", description: "Deuxième vertèbre cervicale qui permet la rotation de la tête. Vertèbre pivot essentielle." },
+      hyoide: { nom: "Os hyoïde", description: "Petit os situé dans le cou, support de la langue et des muscles de la déglutition." },
+      "humerus-g": { nom: "Humérus gauche", description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes." },
+      "humerus-d": { nom: "Humérus droit", description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes." },
+      "radius-g": { nom: "Radius gauche", description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte." },
+      "radius-d": { nom: "Radius droit", description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte." },
+      "cubitus-g": { nom: "Cubitus gauche", description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude." },
+      "cubitus-d": { nom: "Cubitus droit", description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude." },
+      "patte-g": { nom: "Métacarpiens & Phalanges gauche", description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes." },
+      "patte-d": { nom: "Métacarpiens & Phalanges droit", description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes." },
+      penien: { nom: "Os pénien", description: "Os présent dans le pénis de nombreux mammifères carnivores et ursidés, appelé aussi baculum." }
+    };
+
+    const boneZones = document.querySelectorAll('.bone-zone');
+    const modal = document.getElementById('boneModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+
+    boneZones.forEach(zone => {
+      zone.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const boneId = this.getAttribute('data-bone');
+        const boneInfo = bonesData[boneId];
+        if (boneInfo) {
+          modalTitle.textContent = boneInfo.nom;
+          modalDescription.textContent = boneInfo.description;
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden','false');
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+  </script>
 </body>
 </html>
