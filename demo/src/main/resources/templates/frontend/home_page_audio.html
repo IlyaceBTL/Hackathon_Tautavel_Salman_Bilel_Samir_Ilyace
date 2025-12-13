@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ours de Deninger - Audio</title>
+    <title>Ours de Deninger - Audio Test</title>
     <link rel="stylesheet" th:href="@{/style_page.css}"/>
 
     <style>
-        /* Style spécifique pour les zones de clic (les os) */
         .zone-clic {
             position: absolute;
             z-index: 10;
             cursor: pointer;
             border-radius: 50%;
-            /* Mettre background: rgba(255,0,0,0.5); pour voir les zones pendant le test */
-            background-color: transparent; 
+            background-color: rgba(255, 0, 0, 0.5); 
+            
+            pointer-events: auto;  /* <--- AJOUTE CETTE LIGNE ! */
         }
         
-        /* Pour s'assurer que l'image reste bien dans l'hexagone */
         .conteneur-image {
             position: relative;
             width: 100%;
@@ -40,16 +39,16 @@
     <div class="hexagone">
         <div class="hexagonemain">
             <div class="conteneur-image">
-                <img th:src="@{/images/vitrine-ours.png}" alt="Vitrine Ours" class="image-ours">
+                <img th:src="@{/vitrine-ours.png}" alt="Vitrine Ours" class="image-ours">
                 
                 <div class="zone-clic" 
                      style="top: 20%; left: 45%; width: 15%; height: 20%;"
-                     onclick="parler('Ceci est le crâne de l\'Ours de Deninger. Son front est plus plat que celui de l\'ours des cavernes.')">
+                     onclick="parler('Ceci est le crâne de l\'Ours de Deninger.')">
                 </div>
 
                 <div class="zone-clic" 
                      style="top: 60%; left: 30%; width: 20%; height: 10%;"
-                     onclick="parler('Voici le fémur. Il nous apprend que ces ours hibernaient dans la grotte.')">
+                     onclick="parler('Voici le fémur. Il est très robuste.')">
                 </div>
             </div>
         </div>
@@ -57,15 +56,36 @@
 
     <script>
         function parler(texte) {
-            // Stop si ça parle déjà
+            console.log("--- NOUVEAU CLIC ---");
+            
+            // 1. Annuler l'audio précédent
             window.speechSynthesis.cancel();
 
-            // Création du message
-            const message = new SpeechSynthesisUtterance(texte);
-            message.lang = 'fr-FR'; 
-            message.rate = 1;
+            // 2. Récupérer les voix
+            const voix = window.speechSynthesis.getVoices();
+            
+            // MOUCHARD : Dis-moi ce que tu vois !
+            console.log("J'ai trouvé " + voix.length + " voix.");
+            if (voix.length > 0) {
+                // On affiche les 5 premières pour vérifier
+                console.log("Exemples : " + voix[0].name + ", " + voix[1].name + "...");
+            }
 
-            // Lecture
+            // 3. Chercher Audrey
+            const voixChoisie = voix.find(v => v.name.includes("Audrey")) || voix.find(v => v.name.includes("Google"));
+
+            const message = new SpeechSynthesisUtterance(texte);
+
+            if (voixChoisie) {
+                message.voice = voixChoisie;
+                console.log("✅ SUCCÈS : J'utilise la voix -> " + voixChoisie.name);
+            } else {
+                console.log("⚠️ ÉCHEC : Je ne trouve pas Audrey. J'utilise la voix par défaut.");
+                // Affiche toutes les voix pour qu'on puisse chercher le bon nom manuellement si besoin
+                console.log(voix.map(v => v.name)); 
+            }
+
+            message.rate = 1; 
             window.speechSynthesis.speak(message);
         }
     </script>
