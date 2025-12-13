@@ -9,5 +9,4 @@ public class InterArc42Application {
 	public static void main(String[] args) {
 		SpringApplication.run(InterArc42Application.class, args);
 	}
-
 }
