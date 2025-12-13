@@ -16,35 +16,33 @@
             align-items: center;
         }
 
-        /* La boîte de texte "Juste en haut" */
         #boite-description {
             position: absolute;
-            top: 10%; /* Positionné en haut */
+            top: 10%;
             left: 50%;
             transform: translateX(-50%);
             width: 60%;
             background-color: rgba(0, 0, 0, 0.8);
-            color: #f0a500; /* Jaune doré */
+            color: #f0a500;
             padding: 20px;
             border-radius: 10px;
             border: 2px solid #f0a500;
             text-align: center;
             z-index: 20;
-            opacity: 0; /* Caché au début */
+            opacity: 0;
             transition: opacity 0.3s;
-            pointer-events: none; /* Laisse passer les clics si transparent */
+            pointer-events: none;
         }
         
         #boite-description.visible {
             opacity: 1;
         }
 
-        /* Les zones cliquables (Ronds rouges) */
         .zone-clic {
             position: absolute;
             cursor: pointer;
             border-radius: 50%;
-            background-color: rgba(255, 0, 0, 0.3); /* Rouge transparent */
+            background-color: rgba(255, 0, 0, 0.3);
             z-index: 10;
             transition: transform 0.2s, background-color 0.2s;
         }
@@ -79,12 +77,9 @@
                 <div th:each="os : ${animal.os}" 
                      class="zone-clic"
                      th:classappend="'zone-' + ${#strings.replace(os.nom, ' ', '-')}"
-                     
-                
+
                      th:data-nom="${os.nom}"
                      th:data-desc="${os.description}"
-                     
-                    
                      onclick="activerOs(this)">
                 </div>
 
@@ -94,39 +89,36 @@
 
     <script>
         function activerOs(element) {
-            // 1. Récupérer les données stockées dans la zone cliquée
             const nom = element.getAttribute('data-nom');
             const description = element.getAttribute('data-desc');
 
-            // 2. Afficher le texte (Visuel)
             const boite = document.getElementById('boite-description');
             document.getElementById('titre-os').innerText = nom;
             document.getElementById('texte-os').innerText = description;
             
-            // Rendre la boîte visible
             boite.classList.add('visible');
 
-            // 3. Lire le texte (Audio)
             parler(description);
         }
 
         function parler(texte) {
-            window.speechSynthesis.cancel(); // Arrêter l'ancien son
+            window.speechSynthesis.cancel();
 
             const message = new SpeechSynthesisUtterance(texte);
             const voix = window.speechSynthesis.getVoices();
             
-            // Chercher Audrey ou Google
-            const voixChoisie = voix.find(v => v.name.includes("Audrey")) || 
-                                voix.find(v => v.name.includes("Google"));
+            const voixChoisie = voix.find(v => v.name.includes("Microsoft Hortense")) || 
+                                voix.find(v => v.name.includes("Google français"));
 
             if (voixChoisie) message.voice = voixChoisie;
             
-            message.rate = 1;
+            message.lang = 'fr-FR';
+            message.rate = 0.85;   // Plus lent = plus naturel
+            message.pitch = 1.1;   // Légèrement plus aigu = plus naturel
+            
             window.speechSynthesis.speak(message);
         }
         
-        // Sécurité pour charger les voix
         window.speechSynthesis.onvoiceschanged = function() { console.log("Voix chargées"); };
     </script>
 
