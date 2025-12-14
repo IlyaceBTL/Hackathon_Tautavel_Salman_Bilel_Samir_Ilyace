@@ -74,9 +74,9 @@ h1.titre {
       z-index: 10;
     }
     .bone-zone:hover {
-      background: rgba(255, 215, 0, 0.18);
-      border-color: #FFD700;
-      box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: #dfdfdffb;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
       transform: scale(1.04);
     }
     .bone-label {
@@ -84,7 +84,7 @@ h1.titre {
       bottom: 110%;
       left: 50%;
       transform: translateX(-50%) translateY(10px);
-      background: #FFD700;
+      background: #dfdfdffb;
       color: #1a1a1a;
       padding: 6px 12px;
       border-radius: 8px;
@@ -113,7 +113,7 @@ h1.titre {
     }
     .modal.active { display: flex; }
     .modal-content {
-      background: linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%);
+      background: linear-gradient(135deg,#792000 0%,#ff8c42 100%);
       padding: 1.6rem;
       border-radius: 14px;
       max-width: 640px;
@@ -143,8 +143,8 @@ h1.titre {
 
     /* Bouton audio dans le modal */
     .audio-btn {
-      background: #fff;
-      color: #ff6b35;
+      background: #c52700;
+      color: #ffeae3;
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
@@ -155,11 +155,11 @@ h1.titre {
       transition: all 0.2s ease;
     }
     .audio-btn:hover {
-      background: #FFD700;
+      background: #c52700;
       color: #1a1a1a;
     }
     .audio-btn.speaking {
-      background: #FFD700;
+      background: #ff0000;
       color: #1a1a1a;
     }
 
