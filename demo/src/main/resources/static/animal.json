@@ -2,16 +2,16 @@
   "animals": [
     {
       "nom": "Ours de Deninger",
-      "description": "L'ours de Deninger (Ursus deningeri) était un animal trapu et massif présentant un arrière-train surbaissé et un front bombé.",
+      "description": "L'ours de Deninger (Ursus deningeri) était un animal trapu et massif, avec un arrière-train surbaissé et un front bombé. Espèce ubiquiste, il était adapté à une grande variété de biotopes, allant des forêts tempérées aux milieux steppiques. Il a évolué à partir de l'ours étrusque (Ursus etruscus) et était principalement végétarien, comme l'indiquent la morphologie de ses dents.",
       "age": 500000,
       "os": [
         {
           "nom": "crâne",
-          "description": "Le crâne de l'ours de Deninger présente un front bombé caractéristique de l'espèce."
+          "description": "Le crâne de l'ours de Deninger présente un front bombé caractéristique de l'espèce. Il est associé à un animal au profil massif et trapu."
         },
         {
           "nom": "mandibule",
-          "description": "La mandibule robuste permettait une mastication efficace des végétaux."
+          "description": "La mandibule robuste permettait une mastication efficace des végétaux, indiquant un régime alimentaire essentiellement herbivore."
         },
         {
           "nom": "atlas",
@@ -23,7 +23,7 @@
         },
         {
           "nom": "vertèbres thoraciques",
-          "description": "Vertèbres du dos auxquelles s'attachent les côtes."
+          "description": "Vertèbres du dos auxquelles s'attachent les côtes, fournissant un support pour la cage thoracique."
         },
         {
           "nom": "côtes",
@@ -31,19 +31,19 @@
         },
         {
           "nom": "os hyoïde",
-          "description": "Petit os situé à la base de la langue."
+          "description": "Petit os situé à la base de la langue, essentiel pour la phonation et la déglutition."
         },
         {
           "nom": "humérus",
-          "description": "Os du bras, très robuste chez l'ours de Deninger."
+          "description": "Os du bras, particulièrement robuste chez l'ours de Deninger, adapté à une vie végétarienne."
         },
         {
           "nom": "radius",
-          "description": "Os de l'avant-bras côté pouce."
+          "description": "Os de l'avant-bras du côté du pouce."
         },
         {
           "nom": "cubitus",
-          "description": "Os de l'avant-bras côté auriculaire."
+          "description": "Os de l'avant-bras du côté auriculaire."
         },
         {
           "nom": "métacarpiens",
@@ -53,23 +53,17 @@
           "nom": "métatarsien",
           "description": "Os des doigts."
         },
-		{
-		  "nom": "fémur",
-		  "description": "Os de la cuisse, le plus long du corps."
-		},
-		{
-		  "nom": "tibia",
-		  "description": "Os de la jambe, situé à l'avant."
-		},
-		{
-		  "nom": "Ours de Deninger",
-		  "description": "animal."
-		},
+        {
+          "nom": "fémur",
+          "description": "Os de la cuisse, le plus long du corps, apportant soutien et mobilité."
+        },
+        {
+          "nom": "tibia",
+          "description": "Os de la jambe, situé à l'avant, crucial pour le soutien et la locomotion."
+        },
         {
           "nom": "os pénien",
           "description": "Os présent dans le pénis des mâles, caractéristique des ursidés."
-        }
-      ]
-    }
-  ]
+        }]
+	}]
 }

@@ -1,8 +1,8 @@
 {
   "animals": [
     {
-      "nom": "Ours de Beninger",
-      "description": "L'Ours de Beninger est une espèce préhistorique emblématique ayant vécu durant le Pléistocène. De taille imposante, il occupait les paysages européens aux côtés des premiers humains. Omnivore opportuniste, il se nourrissait aussi bien de végétaux que de proies animales. Sa présence témoigne d'un environnement riche et varié, aujourd'hui disparu.",
+      "nom": "Ours de Deninger",
+      "description": "L'Ours de Deninger est une espèce préhistorique emblématique ayant vécu durant le Pléistocène. De taille imposante, il occupait les paysages européens aux côtés des premiers humains. Omnivore opportuniste, il se nourrissait aussi bien de végétaux que de proies animales. Sa présence témoigne d'un environnement riche et varié, aujourd'hui disparu.",
       "age": 500000,
       "os": [
         {
