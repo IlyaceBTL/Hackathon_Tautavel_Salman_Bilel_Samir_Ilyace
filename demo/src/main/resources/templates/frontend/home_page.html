@@ -14,44 +14,37 @@
       <div class="hexagonemain">
         <img th:src="@{/vitrine-ours.png}" alt="Ours de Denninger" class="hex-img" />
         
-        <!-- Zones cliquables pour chaque os -->
-        <div class="bone-zone" data-bone="crane" style="left: 48%; top: 30%; width: 12%; height: 15%;">
+        <div class="bone-zone" data-nom="crâne" style="left: 48%; top: 30%; width: 12%; height: 15%;">
           <div class="bone-label">Crâne</div>
         </div>
-        <div class="bone-zone" data-bone="mandibule" style="left: 48%; top: 43%; width: 8%; height: 8%;">
+        <div class="bone-zone" data-nom="mandibule" style="left: 48%; top: 43%; width: 8%; height: 8%;">
           <div class="bone-label">Mandibule</div>
         </div>
-        <div class="bone-zone" data-bone="vertebres" style="left: 32%; top: 22%; width: 18%; height: 12%;">
+        <div class="bone-zone" data-nom="vertebres" style="left: 32%; top: 22%; width: 18%; height: 12%;">
           <div class="bone-label">Vertèbres</div>
         </div>
-        <div class="bone-zone" data-bone="cotes" style="left: 28%; top: 32%; width: 22%; height: 18%;">
+        <div class="bone-zone" data-nom="côtes" style="left: 28%; top: 32%; width: 22%; height: 18%;">
           <div class="bone-label">Côtes</div>
         </div>
-        <div class="bone-zone" data-bone="humerus-d" style="left: 68%; top: 42%; width: 9%; height: 20%;">
+        <div class="bone-zone" data-nom="humerus-d" style="left: 68%; top: 42%; width: 9%; height: 20%;">
           <div class="bone-label">Humérus Droit</div>
         </div>
-        <div class="bone-zone" data-bone="humerus-g" style="left: 22%; top: 42%; width: 9%; height: 20%;">
+        <div class="bone-zone" data-nom="humerus-g" style="left: 22%; top: 42%; width: 9%; height: 20%;">
           <div class="bone-label">Humérus Gauche</div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Modal d'information avec modèle 3D intégré -->
-  <div class="modal" id="boneModal" aria-hidden="true">
+      </div> </div> </div> <div class="modal" id="boneModal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true">
       <button class="close-btn" id="closeModal" aria-label="Fermer">✕</button>
       <h2 class="modal-title" id="modalTitle">Os sélectionné</h2>
       <p class="modal-description" id="modalDescription">Description de l'os...</p>
       <button class="audio-btn" id="audioBtn">🔊 Écouter</button>
       
-      <!-- Modèle 3D intégré dans le modal -->
       <div id="conteneur-canvas-3d"></div>
       <div class="info-3d-text">🖱️ Utilisez la souris pour tourner et zoomer</div>
     </div>
   </div>
 
-  <!-- Import map pour Three.js -->
   <script type="importmap">
     {
       "imports": {
@@ -61,17 +54,14 @@
     }
   </script>
 
-  <!-- Script 3D modal -->
   <script type="module" th:src="@{/script_3d_modal.js}"></script>
 
-  <!-- Injecter les données Thymeleaf AVANT d'inclure main.js -->
   <script th:inline="javascript">
     window.osList = /*[[${animal?.os}]]*/ [];
   </script>
 
   <script th:src="@{/main.js}"></script>
 
-  <!-- Script pour gérer les clics sur les zones d'os -->
   <script>
     // Attendre que le DOM soit chargé
     document.addEventListener('DOMContentLoaded', function() {
@@ -81,8 +71,8 @@
 
       boneZones.forEach(zone => {
         zone.addEventListener('click', function() {
-          // Récupérer le nom de l'os
-          const boneName = this.getAttribute('data-bone');
+          // Récupération sécurisée du nom
+          const boneName = this.getAttribute('data-nom') || this.getAttribute('data-bone');
           console.log("Clic sur : " + boneName);
           
           // Ouvrir le modal

@@ -6,14 +6,19 @@ let scene, camera, renderer, controls, model3D;
 let estInitialise = false;
 let osSelectionne = null;
 
+
+
 const traductionNoms = {
-    'crâne':      'crane', 
+    'crâne':      'crâne', 
     'mandibule':  'mandibule',  
-    'côtes':      'cotes', 
+    'côtes':      'côtes', 
 };
 
 const materialRouge = new THREE.MeshStandardMaterial({ 
-    color: 0xff0000, emissive: 0x550000, roughness: 0.4, metalness: 0.3
+    color: 0xff0000,   // Rouge pur
+    emissive: 0x550000, // Légère lueur rouge
+    roughness: 0.4, 
+    metalness: 0.3
 });
 
 function init3D() {
@@ -66,21 +71,36 @@ function init3D() {
 }
 
 function miseEnValeurOs(nomHtml) {
-    if (!model3D) return;
+    // 1. SÉCURITÉ : Si aucun modèle ou si le nom est vide/null, on arrête tout de suite.
+    if (!model3D || !nomHtml) {
+        console.warn("miseEnValeurOs ignoré : nomHtml est " + nomHtml);
+        return;
+    }
 
+    // 2. Récupération du nom ou traduction
     let nomCherche = traductionNoms[nomHtml];
-    
+    // Si pas de traduction trouvée, on utilise le nom brut
     if (!nomCherche) nomCherche = nomHtml;
 
-    console.log(`🔍 HTML demande : "${nomHtml}" -> Je cherche 3D : "${nomCherche}"`);
+    // 3. Conversion en minuscule sécurisée (on est sûr que nomCherche n'est pas null ici grâce au check du début)
+    const nomMinuscule = nomCherche.toLowerCase();
+
+    console.log(`🔍 RECHERCHE : "${nomMinuscule}"`);
 
     model3D.traverse((child) => {
         if (child.isMesh) {
-            if (child.userData.materialOrigine) child.material = child.userData.materialOrigine;
+            // Reset couleur
+            if (child.userData.materialOrigine) {
+                child.material = child.userData.materialOrigine;
+            }
 
-            if (nomCherche && child.name.includes(nomCherche)) {
+            const nomMesh = child.name.toLowerCase();
+            const nomParent = child.parent ? child.parent.name.toLowerCase() : "";
+
+            // Vérification
+            if (nomMesh.includes(nomMinuscule) || nomParent.includes(nomMinuscule)) {
                 child.material = materialRouge;
-                console.log("✅ TROUVÉ ! " + child.name + " est devenu ROUGE.");
+                console.log(`✅ TROUVÉ ! Changement sur : "${child.name}"`);
             }
         }
     });
@@ -105,9 +125,4 @@ window.ouvrirModal3D = function(nomOs) {
     setTimeout(() => { 
         !estInitialise ? init3D() : (onWindowResize(), miseEnValeurOs(nomOs)); 
     }, 100);
-};
-
-window.fermerModal3D = function() {
-    osSelectionne = null;
-    miseEnValeurOs(null);
 };
