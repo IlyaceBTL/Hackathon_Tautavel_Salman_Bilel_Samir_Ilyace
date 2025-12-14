@@ -50,9 +50,21 @@
           "description": "Os de la paume de la main."
         },
         {
-          "nom": "phalanges",
+          "nom": "métatarsien",
           "description": "Os des doigts."
         },
+		{
+		  "nom": "fémur",
+		  "description": "Os de la cuisse, le plus long du corps."
+		},
+		{
+		  "nom": "tibia",
+		  "description": "Os de la jambe, situé à l'avant."
+		},
+		{
+		  "nom": "Ours de Deninger",
+		  "description": "animal."
+		},
         {
           "nom": "os pénien",
           "description": "Os présent dans le pénis des mâles, caractéristique des ursidés."

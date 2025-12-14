@@ -1,17 +1,20 @@
 const positionsConfig = {
+	  "Ours de Deninger":       { x: 35, y: 87, w: 16,  h: 18 },
       "crâne":                  { x: 40, y: 40, w: 16, h: 25 },
-      "mandibule":              { x: 25, y: 70, w: 10, h: 8 },
+      "mandibule":              { x: 26, y: 74, w: 10, h: 8 },
       "atlas":                  { x: 47, y: 30, w: 5,  h: 6 },
       "axis":                   { x: 47, y: 20, w: 5,  h: 8 },
-      "vertèbres thoraciques":  { x: 20, y: 28, w: 20, h: 5 },
+      "vertèbres thoraciques":  { x: 21, y: 25, w: 20, h: 13 },
       "côtes":                  { x: 20, y: 45, w: 18, h: 13 },
       "os hyoïde":              { x: 8, y: 55, w: 4,  h: 5 },
-      "humérus":                { x: 22, y: 58, w: 9,  h: 10 },
-      "radius":                 { x: 12, y: 55, w: 8,  h: 15 },
-      "cubitus":                { x: 19, y: 62, w: 5,  h: 15 },
-      "métacarpiens":           { x: 90, y: 45, w: 8,  h: 12 },
-      "phalanges":              { x: 55, y: 70, w: 8,  h: 12 },
-      "os pénien":              { x: 10, y: 45, w: 6,  h: 8 }
+      "humérus":                { x: 22, y: 58, w: 9,  h: 12 },
+      "radius":                 { x: 12, y: 58, w: 8,  h: 20 },
+      "cubitus":                { x: 19, y: 62, w: 4,  h: 18 },
+      "métacarpiens":           { x: 92, y: 50, w: 7,  h: 8 },
+      "métatarsien":            { x: 55, y: 64, w: 9,  h: 20 },
+      "tibia":                  { x: 57, y: 40, w: 18,  h: 19 },
+      "fémur":                  { x: 53, y: 23, w: 25,  h: 14 },
+      "os pénien":              { x: 7, y: 48, w: 12,  h: 5 }
     };
 
     // Position par défaut si l'os n'est pas dans la config

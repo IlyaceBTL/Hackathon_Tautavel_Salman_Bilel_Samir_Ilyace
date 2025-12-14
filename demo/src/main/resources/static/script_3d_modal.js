@@ -7,9 +7,9 @@ let estInitialise = false;
 let osSelectionne = null;
 
 const traductionNoms = {
-    'crane':      'crâne', 
+    'crâne':      'crane', 
     'mandibule':  'mandibule',  
-    'cotes':      'côtes', 
+    'côtes':      'cotes', 
 };
 
 const materialRouge = new THREE.MeshStandardMaterial({ 
