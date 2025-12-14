@@ -70,12 +70,20 @@ function miseEnValeurOs(nomHtml) {
 
     let nomCherche = traductionNoms[nomHtml];
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> aac4e4d256b2cbd9d3728510776d5772707825c7
     if (!nomCherche) nomCherche = nomHtml;
 
     console.log(`🔍 HTML demande : "${nomHtml}" -> Je cherche 3D : "${nomCherche}"`);
 
     model3D.traverse((child) => {
         if (child.isMesh) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> aac4e4d256b2cbd9d3728510776d5772707825c7
             if (child.userData.materialOrigine) child.material = child.userData.materialOrigine;
 
             if (nomCherche && child.name.includes(nomCherche)) {
