@@ -5,242 +5,103 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hackaton Tautavel : Equipe 3 Projet Ours du Denninger</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    /* --- STYLE GENERAL --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Arial', sans-serif;
       background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       color: white;
       min-height: 100vh;
     }
-
-    .layout {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-
+    .layout { display: flex; flex-direction: column; align-items: center; padding: 2rem; }
     .titre {
-      font-size: 3rem;
-      letter-spacing: 0.5rem;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      font-size: 3rem; letter-spacing: 0.5rem; margin-bottom: 2rem;
+      text-transform: uppercase; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     }
 
-    .hexagone {
-      position: relative;
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    .hexagonemain {
-      position: relative;
-      width: 100%;
-    }
-
+    /* --- HEXAGONE ET IMAGE --- */
+    .hexagone { position: relative; max-width: 1200px; width: 100%; }
+    .hexagonemain { position: relative; width: 100%; }
     .hex-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
+      width: 100%; height: auto; display: block; border-radius: 10px;
       box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* Zones cliquables des os */
+    /* --- ZONES CLIQUABLES --- */
     .bone-zone {
-      position: absolute;
-      border: 3px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 10;
+      position: absolute; border: 3px solid transparent; border-radius: 8px;
+      cursor: pointer; transition: all 0.3s ease; z-index: 10;
     }
-
     .bone-zone:hover {
       background: rgba(255, 215, 0, 0.2);
       border-color: #FFD700;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
       transform: scale(1.05);
     }
-
-    /* Label qui apparaît au hover */
+    /* Label au survol */
     .bone-label {
-      position: absolute;
-      bottom: 110%;
-      left: 50%;
+      position: absolute; bottom: 110%; left: 50%;
       transform: translateX(-50%) translateY(10px);
-      background: #FFD700;
-      color: #1a1a1a;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      font-size: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      background: #FFD700; color: #1a1a1a; padding: 8px 16px;
+      border-radius: 8px; font-weight: bold; white-space: nowrap;
+      opacity: 0; pointer-events: none; transition: all 0.3s ease;
+      font-size: 14px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
-
     .bone-label::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 8px solid transparent;
+      content: ''; position: absolute; top: 100%; left: 50%;
+      transform: translateX(-50%); border: 8px solid transparent;
       border-top-color: #FFD700;
     }
+    .bone-zone:hover .bone-label { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    .bone-zone:hover .bone-label {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* Modal d'information */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-      padding: 3rem;
-      border-radius: 20px;
-      max-width: 700px;
-      width: 100%;
-      position: relative;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: white;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .close-btn:hover {
-      background: #f0f0f0;
-      transform: rotate(90deg);
-    }
-
-    .modal-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .modal-description {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: white;
-      margin-bottom: 2rem;
-    }
-
-    .bone-model {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 2rem;
-      border-radius: 15px;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .bone-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-    }
-
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-
-    .action-btn {
-      background: white;
-      color: #ff6b35;
-      border: none;
-      padding: 1rem;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1rem;
-    }
-
-    .action-btn:hover {
-      background: #f0f0f0;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
+    /* --- INFO BULLE INSTRUCTIONS --- */
     .instructions {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      backdrop-filter: blur(10px);
+      position: absolute; top: 20px; right: 20px;
+      background: rgba(0, 0, 0, 0.7); padding: 1rem 1.5rem;
+      border-radius: 10px; font-size: 0.9rem; backdrop-filter: blur(10px);
+      z-index: 20;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .titre {
-        font-size: 2rem;
-        letter-spacing: 0.3rem;
-      }
+    /* --- NOUVEAU : STYLE DE LA MODALE 3D --- */
+    /* Ce style remplace celui de l'ancienne modale pour correspondre à script_3d_modal.js */
+    #modal-3d-overlay {
+        display: none; /* Caché par défaut */
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.9); /* Fond très sombre */
+        z-index: 2000; /* Au-dessus de tout */
+        justify-content: center; align-items: center;
+    }
+    #modal-3d-overlay.actif { display: flex; }
 
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
+    .modal-3d-content {
+        position: relative;
+        width: 85%; height: 85%;
+        background: radial-gradient(circle at center, #2a2a2a 0%, #111 100%);
+        border: 2px solid #f0a500; border-radius: 15px;
+        box-shadow: 0 0 50px rgba(240, 165, 0, 0.3);
+        display: flex; flex-direction: column;
+    }
 
-      .modal-content {
-        padding: 2rem;
-      }
+    #conteneur-canvas-3d {
+        flex-grow: 1; width: 100%; height: 100%;
+        border-radius: 15px; overflow: hidden;
+    }
+
+    .close-btn-3d {
+        position: absolute; top: 15px; right: 20px;
+        color: #f0a500; font-size: 2rem; cursor: pointer;
+        z-index: 2001; transition: transform 0.3s;
+        background: none; border: none;
+    }
+    .close-btn-3d:hover { transform: scale(1.2) rotate(90deg); color: white; }
+    
+    .info-overlay {
+        position: absolute; bottom: 20px; left: 0; width: 100%;
+        text-align: center; pointer-events: none;
+    }
+    .info-text {
+        background: rgba(0,0,0,0.6); padding: 10px 20px;
+        border-radius: 20px; color: #ccc; font-size: 0.9em;
     }
   </style>
 </head>
@@ -250,224 +111,77 @@
 
     <div class="hexagone">
       <div class="instructions">
-        🖱️ Survolez les os • 👆 Cliquez pour en savoir plus
+        🖱️ Survolez les os • 👆 Cliquez pour voir le modèle 3D
       </div>
 
       <div class="hexagonemain">
         <img src="vitrine-ours.png" alt="Ours de Denninger" class="hex-img" id="bearImage" />
         
-        <!-- Zones cliquables pour chaque os -->
-        <!-- À AJUSTER selon les positions réelles sur votre image -->
-        
-        <!-- Crâne -->
         <div class="bone-zone" data-bone="crane" style="left: 48%; top: 30%; width: 12%; height: 15%;">
           <div class="bone-label">Crâne</div>
         </div>
-
-        <!-- Mandibule -->
         <div class="bone-zone" data-bone="mandibule" style="left: 48%; top: 43%; width: 8%; height: 8%;">
           <div class="bone-label">Mandibule</div>
         </div>
-
-        <!-- Vertèbres thoraciques -->
         <div class="bone-zone" data-bone="vertebres" style="left: 32%; top: 22%; width: 18%; height: 12%;">
-          <div class="bone-label">Vertèbres thoraciques</div>
+          <div class="bone-label">Vertèbres</div>
         </div>
-
-        <!-- Côtes -->
         <div class="bone-zone" data-bone="cotes" style="left: 28%; top: 32%; width: 22%; height: 18%;">
           <div class="bone-label">Côtes</div>
         </div>
-
-        <!-- Atlas -->
-        <div class="bone-zone" data-bone="atlas" style="left: 38%; top: 20%; width: 5%; height: 6%;">
-          <div class="bone-label">Atlas</div>
-        </div>
-
-        <!-- Axis -->
-        <div class="bone-zone" data-bone="axis" style="left: 36%; top: 23%; width: 5%; height: 6%;">
-          <div class="bone-label">Axis</div>
-        </div>
-
-        <!-- Os hyoïde -->
-        <div class="bone-zone" data-bone="hyoide" style="left: 45%; top: 40%; width: 4%; height: 5%;">
-          <div class="bone-label">Os hyoïde</div>
-        </div>
-
-        <!-- Humérus gauche -->
-        <div class="bone-zone" data-bone="humerus-g" style="left: 22%; top: 42%; width: 9%; height: 20%;">
-          <div class="bone-label">Humérus gauche</div>
-        </div>
-
-        <!-- Humérus droit -->
         <div class="bone-zone" data-bone="humerus-d" style="left: 68%; top: 42%; width: 9%; height: 20%;">
-          <div class="bone-label">Humérus droit</div>
+          <div class="bone-label">Humérus Droit</div>
         </div>
-
-        <!-- Radius gauche -->
-        <div class="bone-zone" data-bone="radius-g" style="left: 18%; top: 58%; width: 6%; height: 12%;">
-          <div class="bone-label">Radius gauche</div>
+         <div class="bone-zone" data-bone="humerus-g" style="left: 22%; top: 42%; width: 9%; height: 20%;">
+          <div class="bone-label">Humérus Gauche</div>
         </div>
-
-        <!-- Radius droit -->
-        <div class="bone-zone" data-bone="radius-d" style="left: 72%; top: 58%; width: 6%; height: 12%;">
-          <div class="bone-label">Radius droit</div>
         </div>
-
-        <!-- Cubitus gauche -->
-        <div class="bone-zone" data-bone="cubitus-g" style="left: 21%; top: 58%; width: 5%; height: 12%;">
-          <div class="bone-label">Cubitus gauche</div>
-        </div>
-
-        <!-- Cubitus droit -->
-        <div class="bone-zone" data-bone="cubitus-d" style="left: 69%; top: 58%; width: 5%; height: 12%;">
-          <div class="bone-label">Cubitus droit</div>
-        </div>
-
-        <!-- Métacarpiens et Phalanges gauche -->
-        <div class="bone-zone" data-bone="patte-g" style="left: 16%; top: 68%; width: 8%; height: 12%;">
-          <div class="bone-label">Métacarpiens & Phalanges</div>
-        </div>
-
-        <!-- Métacarpiens et Phalanges droit -->
-        <div class="bone-zone" data-bone="patte-d" style="left: 74%; top: 68%; width: 8%; height: 12%;">
-          <div class="bone-label">Métacarpiens & Phalanges</div>
-        </div>
-
-        <!-- Os pénien -->
-        <div class="bone-zone" data-bone="penien" style="left: 42%; top: 52%; width: 6%; height: 8%;">
-          <div class="bone-label">Os pénien</div>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- Modal d'information -->
-  <div class="modal" id="boneModal">
-    <div class="modal-content">
-      <button class="close-btn" id="closeModal">✕</button>
-      <h2 class="modal-title" id="modalTitle">Os sélectionné</h2>
-      <p class="modal-description" id="modalDescription">Description de l'os...</p>
-      
-      <div class="bone-model">
-        <div class="bone-icon">🦴</div>
-        <p>Modèle 3D - Vue 360°</p>
-      </div>
+  <div id="modal-3d-overlay">
+      <div class="modal-3d-content">
+          <button class="close-btn-3d" onclick="fermerModal3D()">✕</button>
+          
+          <div id="conteneur-canvas-3d"></div>
 
-      <div class="action-buttons">
-        <button class="action-btn">🔍 Zoom</button>
-        <button class="action-btn">🔊 Audio</button>
-        <button class="action-btn">📋 Quiz</button>
+          <div class="info-overlay">
+              <span class="info-text">🖱️ Utilisez la souris pour tourner et zoomer</span>
+          </div>
       </div>
-    </div>
   </div>
 
-  <script>
-    // Données des os depuis votre JSON
-    const bonesData = {
-      crane: {
-        nom: "Crâne",
-        description: "Le crâne de l'ours de Deninger présente un front bombé caractéristique. Cette structure massive protégeait le cerveau et supportait de puissantes mâchoires."
-      },
-      mandibule: {
-        nom: "Mandibule",
-        description: "La mâchoire inférieure était adaptée à un régime principalement végétarien. Les dents montrent une morphologie adaptée au broyage de végétaux."
-      },
-      vertebres: {
-        nom: "Vertèbres thoraciques",
-        description: "Les vertèbres thoraciques formaient une colonne vertébrale robuste, soutenant le corps massif de l'animal et permettant une grande puissance."
-      },
-      cotes: {
-        nom: "Côtes",
-        description: "La cage thoracique massive protégeait les organes vitaux de cet animal trapu. Les côtes étaient particulièrement développées."
-      },
-      atlas: {
-        nom: "Atlas",
-        description: "Première vertèbre cervicale qui supporte le crâne et permet les mouvements de hochement de la tête."
-      },
-      axis: {
-        nom: "Axis",
-        description: "Deuxième vertèbre cervicale qui permet la rotation de la tête. Vertèbre pivot essentielle."
-      },
-      hyoide: {
-        nom: "Os hyoïde",
-        description: "Petit os situé dans le cou, support de la langue et des muscles de la déglutition."
-      },
-      "humerus-g": {
-        nom: "Humérus gauche",
-        description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes."
-      },
-      "humerus-d": {
-        nom: "Humérus droit",
-        description: "Os du bras très robuste, permettant de supporter le poids du corps lors des déplacements quadrupèdes."
-      },
-      "radius-g": {
-        nom: "Radius gauche",
-        description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte."
-      },
-      "radius-d": {
-        nom: "Radius droit",
-        description: "Os de l'avant-bras situé du côté du pouce, participant à la rotation de la patte."
-      },
-      "cubitus-g": {
-        nom: "Cubitus gauche",
-        description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude."
-      },
-      "cubitus-d": {
-        nom: "Cubitus droit",
-        description: "Os de l'avant-bras situé du côté de l'auriculaire, formant l'articulation du coude."
-      },
-      "patte-g": {
-        nom: "Métacarpiens & Phalanges gauche",
-        description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes."
-      },
-      "patte-d": {
-        nom: "Métacarpiens & Phalanges droit",
-        description: "Os de la main et des doigts. Les phalanges se terminaient par de puissantes griffes."
-      },
-      penien: {
-        nom: "Os pénien",
-        description: "Os présent dans le pénis de nombreux mammifères carnivores et ursidés, appelé aussi baculum."
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
       }
-    };
+    }
+  </script>
 
-    // Gestion des clics sur les os
+  <script type="module" src="/script_3d_modal.js"></script>
+
+ <script>
     const boneZones = document.querySelectorAll('.bone-zone');
-    const modal = document.getElementById('boneModal');
-    const closeBtn = document.getElementById('closeModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDescription = document.getElementById('modalDescription');
 
     boneZones.forEach(zone => {
       zone.addEventListener('click', function() {
-        const boneId = this.getAttribute('data-bone');
-        const boneInfo = bonesData[boneId];
         
-        if (boneInfo) {
-          modalTitle.textContent = boneInfo.nom;
-          modalDescription.textContent = boneInfo.description;
-          modal.classList.add('active');
+        // 1. On récupère le nom de l'os (ex: "crane", "mandibule")
+        const boneName = this.getAttribute('data-bone');
+        console.log("Clic sur : " + boneName);
+        
+        // 2. On ouvre la modale en passant ce nom
+        if (window.ouvrirModal3D) {
+            window.ouvrirModal3D(boneName);
+        } else {
+            alert("Le script 3D n'est pas encore prêt !");
         }
       });
     });
-
-    // Fermer la modal
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-      }
-    });
-
-    // Échapper pour fermer
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        modal.classList.remove('active');
-      }
-    });
   </script>
+
 </body>
 </html>
